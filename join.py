@@ -1,9 +1,24 @@
 import os 
 import argparse
 
-def join_files(file_list, output_file):
-    with open(file_list, "w", encoding='utf-8')  as f:
-        lines = f.readlines()
+def join_files(files, output, verbose):
+    total_lines = 0 
+
+    with open(output, "w", encoding='utf-8')  as outfile:
+        for file in files:
+            if os.path.exists(file):
+                with open(files, "r", encoding="utf-8") as infile:
+                    lines = infile.readlines()
+                    total_lines += len(lines)
+                    outfile.writelines(lines)
+                    outfile.write("\n")
+            else:
+                print("Selected file does not exist.")
+
+                if verbose:
+                    print(f"Added {len(lines)} from {file}")
+    
+    print(f"Created {outfile} with total {total_lines} lines.")
 
 
 if __name__ == "__main__":
