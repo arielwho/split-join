@@ -1,7 +1,7 @@
 import os 
 import argparse
 
-def join_files(files, output, verbose):
+def join_files(files: list, output: str, verbose: bool):
     total_lines = 0 
 
     with open(output, "w", encoding='utf-8')  as outfile:
