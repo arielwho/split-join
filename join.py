@@ -27,7 +27,7 @@ if __name__ == "__main__":
     parser.add_argument("-f" ,"--file", type=str, nargs="+", help="List of txt files to combine")
     parser.add_argument("-o", "--output", default="combined.txt", help="Name of the output file.")
     parser.add_argument("-v", "--verbose", action = "store_true", help="Show detailed output")
-    args = parser.parse_args()      #pristupam kao args.files; args.output; args.verbose
+    args = parser.parse_args()      #pristupam kao args.file; args.output; args.verbose
 
     if not args.file:
         print("No input files provided. Use -f to specify files.")
