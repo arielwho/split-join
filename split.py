@@ -1,5 +1,8 @@
 import argparse
 import os
+import logging
+
+logging.basicConfig(level=logging.INFO, format="[%(levelname)s] %(message)s")
 
 def split_file(file_path, lines_per_file):
     with open(file_path, "r", encoding="utf-8") as f:
@@ -15,7 +18,7 @@ def split_file(file_path, lines_per_file):
         
         with open(new_file_name, "w", encoding="utf-8") as nf:
             nf.writelines(split_lines)
-        print(f"Created {new_file_name} with {len(split_lines)} lines.")
+        logging.info(f"Created {new_file_name} with {len(split_lines)} lines.")
  
 
 if __name__ == "__main__":
@@ -23,6 +26,6 @@ if __name__ == "__main__":
     parser.add_argument("--file", type = str, help = "Path to txt file")
     parser.add_argument("--lines", type = int, help = "Number of lines per split file")
     args = parser.parse_args()
-    print(f"File: {args.file}, Lines per file: {args.lines}")
+    logging.info(f"File: {args.file}. Lines per file: {args.lines}")
 
     split_file(args.file, args.lines)

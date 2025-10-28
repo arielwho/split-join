@@ -1,5 +1,8 @@
 import os 
 import argparse
+import logging
+
+logging.basicConfig(level=logging.INFO, format="[%(levelname)s] %(message)s")
 
 def join_files(files: list, output: str, verbose: bool):
     total_lines = 0 
@@ -13,13 +16,12 @@ def join_files(files: list, output: str, verbose: bool):
                     outfile.writelines(lines)
                     outfile.write("\n")
                 if verbose:
-                    print(f"Added {len(lines)} lines from {file}")
+                    logging.info(f"Added {len(lines)} lines from {file}")
             else:
-                print("Selected file does not exist.")
+                logging.error("Selected file does not exist.")
 
                 
-    
-    print(f"Created '{output}' with total {total_lines} lines.")
+    logging.info(f"Created '{output}' with total {total_lines} lines.")
 
 
 if __name__ == "__main__":
@@ -30,6 +32,6 @@ if __name__ == "__main__":
     args = parser.parse_args()      #pristupam kao args.file; args.output; args.verbose
 
     if not args.file:
-        print("No input files provided. Use -f to specify files.")
+        logging.info("No input files provided. Use -f to specify files.")
     else:
         join_files(args.file, args.output, args.verbose)
