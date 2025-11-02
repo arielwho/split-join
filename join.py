@@ -8,19 +8,22 @@ def join_files(files: list, output: str, verbose: bool):
     total_lines = 0 
 
     with open(output, "w", encoding='utf-8')  as outfile:
-        for file in files:
-            if os.path.exists(file):
-                with open(file, "r", encoding="utf-8") as infile:
-                    lines = infile.readlines()
-                    total_lines += len(lines)
-                    outfile.writelines(lines)
-                    outfile.write("\n")
+        for file_path in files:
+            if not os.path.exists(file_path):
+                logging.error(f"Selected file does not exist: {file_path}")
+                continue
+            try:
+                with open(file_path, "r", encoding="utf-8") as infile:
+                    file_lines = 0
+                    for line in infile:
+                        outfile.write(line)
+                        file_lines += 1
+                    total_lines += file_lines
                 if verbose:
-                    logging.info(f"Added {len(lines)} lines from {file}")
-            else:
-                logging.error("Selected file does not exist.")
+                    logging.info(f"Added {file_lines} lines from {file_path}")
+            except Exception as e:
+                logging.exception(f"Failed to read {file_path}: {e}")
 
-                
     logging.info(f"Created '{output}' with total {total_lines} lines.")
 
 def stream_lines(file_path, chunk_size=1024*64):
@@ -37,7 +40,7 @@ def stream_lines(file_path, chunk_size=1024*64):
             leftover = lines.pop()
             for bline in lines:
                 yield bline.decode('utf-8', errors='replace')
-            if leftover:
+        if leftover:
                 yield leftover.decode("utf-8", errors='replace')
 
 if __name__ == "__main__":
