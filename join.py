@@ -23,6 +23,22 @@ def join_files(files: list, output: str, verbose: bool):
                 
     logging.info(f"Created '{output}' with total {total_lines} lines.")
 
+def stream_lines(file_path, chunk_size=1024*64):
+    """Generator: returns line-per-line (str), uses rb and decoding by chunk. 64KB by chunk"""
+
+    with open(file_path, 'rb') as f:
+        leftover = b''
+        while True:
+            chunk = f.read(chunk_size)
+            if not chunk:
+                break
+            data = leftover + chunk
+            lines = data.split(b'\n')
+            leftover = lines.pop()
+            for bline in lines:
+                yield bline.decode('utf-8', errors='replace')
+            if leftover:
+                yield leftover.decode("utf-8", errors='replace')
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Join CLI tool")
