@@ -1,6 +1,7 @@
 import argparse
 from split import split_file
 from join import join_files
+from tqdm import tqdm
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Split or join text files easily.")
@@ -23,6 +24,12 @@ def main() -> None:
         split_file(args.file, args.lines)
     elif args.command == "join":
         join_files(args.files, args.output, args.verbose)
-        
+
+with tqdm(total=total_lines, unit="lines") as pbar:     #progress bar
+    def progress_cb(frac, info):
+        pbar.n = int(frac * total_lines)
+        pbar.refresh()
+
+    #ovde ide funkcija koja uzima generator i deli fajl u partove   
 if __name__ == "__main__":
     main()
