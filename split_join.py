@@ -1,4 +1,5 @@
 import argparse
+from ast import arg
 from split import split_file
 from join import join_files
 from tqdm import tqdm
@@ -25,11 +26,17 @@ def main() -> None:
     elif args.command == "join":
         join_files(args.files, args.output, args.verbose)
 
-with tqdm(total=total_lines, unit="lines") as pbar:     #progress bar
-    def progress_cb(frac, info):
-        pbar.n = int(frac * total_lines)
-        pbar.refresh()
+    if args.command == "split":
+        with open(args.file, "r", encoding="utf-8") as f:
+            total_lines = sum(1 for _ in f)
+        with tqdm(total=total_lines, unit="lines") as pbar:     #progress bar
+            def progress_cb(frac, info):
+                pbar.n = int(frac * total_lines)
+                pbar.refresh()
+        split_file(args.file, args.lines, progress_cb=progress_cb)
+    elif args.command == "join":
+        join_files(args.files, args.output, args.verbose)
+       
 
-    #ovde ide funkcija koja uzima generator i deli fajl u partove   
 if __name__ == "__main__":
     main()

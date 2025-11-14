@@ -5,7 +5,7 @@ import logging
 
 logging.basicConfig(level=logging.INFO, format="[%(levelname)s] %(message)s")
 
-def split_file(file_path, lines_per_file):
+def split_file(file_path, lines_per_file, progress_cb=None):
     with open(file_path, "r", encoding="utf-8") as f:
         lines = f.readlines()
 
