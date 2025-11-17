@@ -12,9 +12,10 @@ instalation:
  ```bash
     git clone https://github.com/arielwho/split-join.git
     cd split-join
-
+   ```
 create virtual env: 
-
+```bash
 python -m venv .venv 
 source .venv/bin/activate   # Linux / macOS 
 .venv\Scripts\activate      # Windows 
+```
