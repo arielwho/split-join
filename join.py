@@ -4,7 +4,7 @@ import logging
 
 logging.basicConfig(level=logging.INFO, format="[%(levelname)s] %(message)s")
 
-def join_files(files: list, output: str, verbose: bool):
+def join_files(files: list, output: str, verbose: bool) -> None:
     total_lines = 0 
 
     with open(output, "w", encoding='utf-8')  as outfile:

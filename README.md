@@ -7,8 +7,14 @@ Features:
 **fast I/O - efficiently read through file for big chunks of data  
 **verbose / logging - record of useful information through work  
 
-Instalation:  
+instalation:  
 
  ```bash
     git clone https://github.com/arielwho/split-join.git
     cd split-join
+
+create virtual env: 
+
+python -m venv .venv 
+source .venv/bin/activate   # Linux / macOS 
+.venv\Scripts\activate      # Windows 
